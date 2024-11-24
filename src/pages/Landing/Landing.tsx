@@ -1,9 +1,21 @@
 import styles from "./Landing.module.scss";
 import HeroSvg from "../../assets/hero.svg";
+import { useState } from "react";
+import Modal from "../../components/global/Modal/Modal";
 
 function Landing() {
+  const [showModal, setShowModal] = useState(false);
+
+  function handleClick(target:string) {
+    switch(target) {
+      case "signup":
+        setShowModal(true);
+        break;
+    }
+  }
   return (
-    <main className={`main-container`}>
+    <>
+      <main className={`main-container`}>
       <section className={styles["landing-container"]}>
         <header className={styles["landing-header"]}>
           <div className={styles["landing-logo"]}>
@@ -13,7 +25,7 @@ function Landing() {
             <span>Tracker</span>
           </div>
           <div className={styles["landing-nav"]}>
-            <button className={styles["nav-link"]}>Signup</button>
+            <button className={styles["nav-link"]} onClick={()=>handleClick("signup")}>Signup</button>
           </div>
         </header>
         <div className={styles["landing-content"]}>
@@ -41,6 +53,12 @@ function Landing() {
         </div>
       </section>
     </main>
+    {showModal && (
+        <Modal isOpen={showModal} onClose={() => setShowModal(false)} title="Modal Title">
+          <p>This is the modal content.</p>
+        </Modal>
+      )}
+    </>
   );
 }
 
